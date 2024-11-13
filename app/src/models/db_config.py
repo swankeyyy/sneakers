@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import (create_async_engine, AsyncEngine, AsyncSession,
                                     async_sessionmaker)
 
-from src import settings
+from app.src.settings import settings
 
 
 class DBConfig:
@@ -19,3 +19,5 @@ class DBConfig:
 
 
 db_config = DBConfig(settings.DB_URL, settings.DB_ECHO)
+
+
