@@ -11,11 +11,13 @@ from enum import Enum as en_Enum
 
 
 class GenderType(en_Enum):
+    """Gender type for sneakers"""
     male = 'M'
     female = 'F'
 
 
 class Product(IdPkMixin, Base):
+    """Product model with size brand and etc"""
     __tablename__ = 'products'
     name: Mapped[str] = mapped_column(String(50), nullable=False, unique=True)
     description: Mapped[str] = mapped_column(String(200), nullable=True)
@@ -34,6 +36,7 @@ class Product(IdPkMixin, Base):
         return f'{self.name} - {self.price}'
 
 class Brand(IdPkMixin, Base):
+    """Brand model for product like adidas puma and etc"""
     __tablename__ = 'brands'
     name: Mapped[str] = mapped_column(String(40), unique=True, nullable=False)
     products: Mapped[List["Product"]] = relationship(back_populates="product_brand",
@@ -43,6 +46,7 @@ class Brand(IdPkMixin, Base):
         return self.name
 
 class Size(IdPkMixin, Base):
+    """Size model for product like 38 41 42"""
     __tablename__ = 'sizes'
     size: Mapped[int] = mapped_column(Integer, nullable=False, unique=True)
     products: Mapped[List["Product"]] = relationship(back_populates="product_size",
