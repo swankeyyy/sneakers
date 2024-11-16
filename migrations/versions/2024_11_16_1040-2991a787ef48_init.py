@@ -1,8 +1,8 @@
-"""add Product Size and Brand Models
+"""init
 
-Revision ID: e572f5b99a78
+Revision ID: 2991a787ef48
 Revises: 
-Create Date: 2024-11-16 09:20:51.127757
+Create Date: 2024-11-16 10:40:04.699885
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'e572f5b99a78'
+revision: str = '2991a787ef48'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -42,6 +42,7 @@ def upgrade() -> None:
     sa.Column('gender', sa.Enum('male', 'female', name='gendertype'), nullable=False),
     sa.Column('product_size_id', sa.UUID(), nullable=True),
     sa.Column('product_brand_id', sa.UUID(), nullable=True),
+    sa.Column('created_at', sa.DateTime(timezone=True), nullable=False),
     sa.Column('id', sa.UUID(), nullable=False),
     sa.ForeignKeyConstraint(['product_brand_id'], ['brands.id'], name=op.f('fk_products_product_brand_id_brands')),
     sa.ForeignKeyConstraint(['product_size_id'], ['sizes.id'], name=op.f('fk_products_product_size_id_sizes')),

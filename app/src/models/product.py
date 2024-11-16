@@ -1,11 +1,12 @@
 from datetime import datetime
 from typing import List
+from uuid import UUID, uuid4
 
 from .base import IdPkMixin, Base
 
 from sqlalchemy import String, Integer, Enum, ForeignKey, Float, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, validates, relationship
-from sqlalchemy.dialects.postgresql import UUID
+
 
 from enum import Enum as en_Enum
 
@@ -35,6 +36,7 @@ class Product(IdPkMixin, Base):
     def __repr__(self):
         return f'{self.name} - {self.price}'
 
+
 class Brand(IdPkMixin, Base):
     """Brand model for product like adidas puma and etc"""
     __tablename__ = 'brands'
@@ -44,6 +46,7 @@ class Brand(IdPkMixin, Base):
 
     def __repr__(self):
         return self.name
+
 
 class Size(IdPkMixin, Base):
     """Size model for product like 38 41 42"""

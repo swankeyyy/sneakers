@@ -1,8 +1,7 @@
-import uuid
-
+from uuid import UUID, uuid4
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from sqlalchemy import MetaData
-from sqlalchemy.dialects.postgresql import UUID
+
+import sqlalchemy as sa
 
 
 naming_convention: dict[str, str] = {
@@ -18,12 +17,12 @@ class Base(DeclarativeBase):
     """Base class for all models."""
     __abstract__ = True
 
-    metadata = MetaData(naming_convention=naming_convention,)
+    metadata = sa.MetaData(naming_convention=naming_convention,)
 
 
 class IdPkMixin:
     """Mixin for SQLAlchemy models with `pk` and `id` columns"""
 
-    id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id: Mapped[UUID] = mapped_column(sa.UUID(as_uuid=True), primary_key=True, default=uuid4)
 
 
