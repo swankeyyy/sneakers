@@ -34,7 +34,10 @@ class Product(IdPkMixin, Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=datetime.now)
 
     def __repr__(self):
-        return f'{self.name} - {self.price}'
+        return f'{self.name}'
+
+    def __str__(self):
+        return f'{self.name}'
 
 
 class Brand(IdPkMixin, Base):
@@ -57,7 +60,10 @@ class Size(IdPkMixin, Base):
                                                      cascade="all, delete-orphan", lazy="select")
 
     def __repr__(self):
-        return self.size
+        return f'{self.size}'
+
+    def __str__(self):
+        return f'{self.size}'
 
     @validates('size')
     def validate_size(self, key, value):
