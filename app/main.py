@@ -1,10 +1,12 @@
-from fastapi import FastAPI, Depends
-import uvicorn
-from contextlib import asynccontextmanager
-from sqlalchemy.ext.asyncio import AsyncSession
-from src.models import db_config, Product
-from api import router as api_router
+from fastapi import FastAPI
 
+import uvicorn
+
+from contextlib import asynccontextmanager
+
+from api import router as api_router
+from src.admin.config import create_admin
+from src.models.db_config import db_config
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -25,6 +27,26 @@ main_app.include_router(api_router)
 @main_app.get('/')
 async def index():
     return 'hello Kitty'
+
+admin = create_admin(main_app)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 if __name__ == "__main__":

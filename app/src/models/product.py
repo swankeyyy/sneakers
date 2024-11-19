@@ -48,6 +48,7 @@ class Brand(IdPkMixin, Base):
         return self.name
 
 
+
 class Size(IdPkMixin, Base):
     """Size model for product like 38 41 42"""
     __tablename__ = 'sizes'
