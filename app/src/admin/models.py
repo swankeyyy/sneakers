@@ -4,6 +4,7 @@ from src.models import Brand, Size, Product
 
 
 class BrandAdmin(ModelView, model=Brand):
+    """Admin panel model for Brand"""
     name = 'Бренд'
     name_plural = 'Бренды'
     page_size = 50
@@ -13,6 +14,7 @@ class BrandAdmin(ModelView, model=Brand):
 
 
 class SizeAdmin(ModelView, model=Size):
+    """Admin panel model for Size"""
     name = 'Размер'
     name_plural = 'Размеры'
     page_size = 50
@@ -22,6 +24,7 @@ class SizeAdmin(ModelView, model=Size):
 
 
 class ProductAdmin(ModelView, model=Product):
+    """Admin panel model for Product"""
     name = 'Товар'
     name_plural = 'Товары'
     page_size = 50
