@@ -17,6 +17,8 @@ class DBConfig:
         async with self.session_factory() as session:
             yield session
 
+    def get_engine(self) -> AsyncEngine:
+        return self.engine
 
 db_config = DBConfig(settings.DB_URL, settings.DB_ECHO)
 
