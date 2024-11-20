@@ -9,6 +9,7 @@ from src.admin.config import create_admin
 from src.models.db_config import db_config
 
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """close DB after lifespan"""

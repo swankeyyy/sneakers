@@ -1,15 +1,21 @@
 from datetime import datetime
 from typing import List
-from uuid import UUID, uuid4
+from uuid import UUID
 
+from app.src.settings import settings
 from .base import IdPkMixin, Base
 
-from sqlalchemy import String, Integer, Enum, ForeignKey, Float, DateTime
+from sqlalchemy import String, Integer, Enum, ForeignKey, Float, DateTime, Column
 from sqlalchemy.orm import Mapped, mapped_column, validates, relationship
 
+from fastapi_storages.integrations.sqlalchemy import FileType
+from fastapi_storages import FileSystemStorage
 
 from enum import Enum as en_Enum
 
+
+# storage for images of Product
+storage = FileSystemStorage(path=settings.STORAGE_URL)
 
 class GenderType(en_Enum):
     """Gender type for sneakers"""
@@ -23,7 +29,7 @@ class Product(IdPkMixin, Base):
     name: Mapped[str] = mapped_column(String(50), nullable=False, unique=True)
     description: Mapped[str] = mapped_column(String(200), nullable=True)
     slug: Mapped[str] = mapped_column(String(50), nullable=False, unique=True)
-    image: Mapped[str] = mapped_column(String(50), nullable=True)
+    image: Mapped[str] = mapped_column(FileType(storage=storage), nullable=True)
     quantity: Mapped[int] = mapped_column(Integer, default=1)
     price: Mapped[float] = mapped_column(Float, nullable=False)
     gender: Mapped[GenderType] = mapped_column(Enum(GenderType), default=GenderType.male)
@@ -49,7 +55,6 @@ class Brand(IdPkMixin, Base):
 
     def __repr__(self):
         return self.name
-
 
 
 class Size(IdPkMixin, Base):
