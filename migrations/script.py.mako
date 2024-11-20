@@ -9,7 +9,18 @@ from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
+
+import fastapi_storages
+from app.src.models.product import storage
 ${imports if imports else ""}
+${imports if imports else ""}
+
+from typing import Any
+
+
+
+
+
 
 # revision identifiers, used by Alembic.
 revision: str = ${repr(up_revision)}

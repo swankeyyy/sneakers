@@ -1,8 +1,8 @@
-"""init
+"""init2
 
-Revision ID: 2991a787ef48
+Revision ID: a5fb8bba63c2
 Revises: 
-Create Date: 2024-11-16 10:40:04.699885
+Create Date: 2024-11-20 20:50:30.397104
 
 """
 from typing import Sequence, Union
@@ -10,9 +10,20 @@ from typing import Sequence, Union
 from alembic import op
 import sqlalchemy as sa
 
+import fastapi_storages
+from app.src.models.product import storage
+
+
+
+from typing import Any
+
+
+
+
+
 
 # revision identifiers, used by Alembic.
-revision: str = '2991a787ef48'
+revision: str = 'a5fb8bba63c2'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -36,7 +47,7 @@ def upgrade() -> None:
     sa.Column('name', sa.String(length=50), nullable=False),
     sa.Column('description', sa.String(length=200), nullable=True),
     sa.Column('slug', sa.String(length=50), nullable=False),
-    sa.Column('image', sa.String(length=50), nullable=True),
+    sa.Column('image', fastapi_storages.integrations.sqlalchemy.FileType(storage), nullable=True),
     sa.Column('quantity', sa.Integer(), nullable=False),
     sa.Column('price', sa.Float(), nullable=False),
     sa.Column('gender', sa.Enum('male', 'female', name='gendertype'), nullable=False),
