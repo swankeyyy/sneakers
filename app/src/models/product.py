@@ -38,6 +38,7 @@ class Product(IdPkMixin, Base):
     product_brand_id: Mapped[UUID] = mapped_column(ForeignKey('brands.id'), nullable=True)
     product_brand: Mapped["Brand"] = relationship(back_populates="products")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=datetime.now)
+    is_active: Mapped[bool] = mapped_column(default=True, nullable=True)
 
     def __repr__(self):
         return f'{self.name}'
