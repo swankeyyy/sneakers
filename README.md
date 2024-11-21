@@ -56,4 +56,28 @@ e-commerce backend prjct
     }
     }
     ]
+
+#### Get all brands with products (with flag is_active=True):
+    products/brands/all/
+
+#### returns list of JSON like:
+    [
+    {
+    "id": "a104ef42-baef-4efc-96a6-8729f1a6cc7e",
+    "name": "adidas",
+    "products": [
+      {
+        "id": "854e7541-58c5-4e5f-8ca6-11dad60e8f94",
+        "name": "123",
+        "slug": "123",
+        "image": "../app/images/img.jpg",
+        "price": 12,
+        "product_brand": {
+          "id": "a104ef42-baef-4efc-96a6-8729f1a6cc7e",
+          "name": "adidas"
+        }
+      }
+    ]
+    }
+    ]
   

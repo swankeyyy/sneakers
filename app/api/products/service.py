@@ -50,7 +50,7 @@ class BrandService:
     async def get_all_brands(response: Response, session: AsyncSession) -> list[Brand]:
         """Return list of all brands with list of products"""
         stmt = select(Brand).options(
-            joinedload(Brand.products).selectinload(Product.product_size)).filter(Product.is_active==True)
+            joinedload(Brand.products).selectinload(Product.product_size)).filter(Product.is_active == True)
         brands = await session.execute(stmt)
         brands = brands.scalars().unique().all()
         brands = list(brands)
