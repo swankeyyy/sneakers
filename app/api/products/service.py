@@ -1,21 +1,29 @@
-from src.models import Size, Brand
+from fastapi import HTTPException
+from sqlalchemy import select
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import selectinload
+from starlette import status
+from starlette.responses import Response
+
+from src.models import Product
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
-async def _add_size(new_size: int, session: AsyncSession) -> Size:
-    """Create a new size and add it to the database. Got int, return new size"""
-    size = Size(size=new_size)
-    session.add(size)
-    await session.commit()
-    await session.refresh(size)
-    return size
+class ProductService:
+    """All methods related to product service like get product by id, get all products and etc"""
 
+    @staticmethod
+    async def get_product_by_uuid(product_uuid: str, response: Response, session: AsyncSession) -> Product:
+        """Return product by uuid if it exists, else return HTTPError"""
+        try:
+            stmt = select(Product).where(product_uuid == Product.id).options(selectinload(Product.product_brand),
+                                                                             selectinload(Product.product_size))
+            product = await session.scalar(stmt)
+            if product:
+                response.status = status.HTTP_200_OK
+                return product
+        except SQLAlchemyError:
+            raise HTTPException(500, detail='wrong uuid length')
 
-async def _add_brand(new_brand: str, session: AsyncSession) -> Brand:
-    """Create a new brand and add it to the database. Got brand name(str), return new brand"""
-    brand = Brand(name=new_brand)
-    session.add(brand)
-    await session.commit()
-    await session.refresh(brand)
-    return brand
+        raise HTTPException(500, detail='product not found')

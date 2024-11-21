@@ -5,7 +5,7 @@ from uuid import UUID
 from app.src.settings import settings
 from .base import IdPkMixin, Base
 
-from sqlalchemy import String, Integer, Enum, ForeignKey, Float, DateTime, Column
+from sqlalchemy import String, Integer, Enum, ForeignKey, Float, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, validates, relationship
 
 from fastapi_storages.integrations.sqlalchemy import FileType
@@ -13,9 +13,9 @@ from fastapi_storages import FileSystemStorage
 
 from enum import Enum as en_Enum
 
-
 # storage for images of Product
 storage = FileSystemStorage(path=settings.STORAGE_URL)
+
 
 class GenderType(en_Enum):
     """Gender type for sneakers"""
