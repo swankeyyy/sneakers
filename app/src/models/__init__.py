@@ -1,4 +1,4 @@
-__all__ = ("Base", "Product", "db_config")
+__all__ = ("Base", "Product", "db_config", "Brand", "Size")
 
 from .base import Base
 from .product import Product, Brand, Size

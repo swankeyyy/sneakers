@@ -3,14 +3,24 @@ from typing import Union
 from starlette.responses import Response
 from fastapi import APIRouter, Depends
 
-from src.models import Product
+from src.models import Product, Brand
 from src.models.db_config import db_config
-from .service import ProductService
-from .schemas import SingleProduct, ListProduct
+from .service import ProductService, BrandService
+from .schemas import SingleProduct, ListProduct, ListBrands
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter()
+
+
+# get all active products brand
+@router.get('/brands/all/', summary='Get all brands with list of active products',
+            response_model=Union[list[ListBrands, None]])
+async def get_all_brands(response: Response,
+                         session: AsyncSession = Depends(db_config.get_session)) -> list[Brand] | Exception:
+    """Returns all brands with list of active products"""
+    brands = await BrandService.get_all_brands(response=response, session=session)
+    return brands
 
 
 # get all active products

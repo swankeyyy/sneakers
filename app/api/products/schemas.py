@@ -45,3 +45,8 @@ class ListProduct(ProductBase):
     image: Optional[str] = None
     price: int
     product_brand: BrandBase
+
+
+class ListBrands(BrandBase):
+    """Schema for list of brands with active products"""
+    products: list[ListProduct]

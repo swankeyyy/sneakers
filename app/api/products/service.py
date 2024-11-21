@@ -1,13 +1,13 @@
 from sqlalchemy import select, desc
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import selectinload, joinedload
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from fastapi import HTTPException
 from starlette import status
 from starlette.responses import Response
 
-from src.models import Product
+from src.models import Product, Brand
 
 
 class ProductService:
@@ -32,12 +32,29 @@ class ProductService:
     async def get_all_products(response: Response, session: AsyncSession) -> list[Product]:
         """Return all products with status is_active"""
 
-        stmt = (select(Product).where(Product.is_active == True).options(
+        stmt = select(Product).where(Product.is_active == True).options(
             selectinload(Product.product_brand), selectinload(Product.product_size)).order_by(
-            desc(Product.created_at)))
+            desc(Product.created_at))
         products = await session.scalars(stmt)
         products = list(products)
         if products:
             response.status = status.HTTP_200_OK
             return list(products)
         raise HTTPException(500, detail='products not found, DB is empty')
+
+
+class BrandService:
+    """All methods related to Brand model"""
+
+    @staticmethod
+    async def get_all_brands(response: Response, session: AsyncSession) -> list[Brand]:
+        """Return list of all brands with list of products"""
+        stmt = select(Brand).options(
+            joinedload(Brand.products).selectinload(Product.product_size)).filter(Product.is_active==True)
+        brands = await session.execute(stmt)
+        brands = brands.scalars().unique().all()
+        brands = list(brands)
+        if brands:
+            response.status = status.HTTP_200_OK
+            return brands
+        raise HTTPException(500, detail='brands not found, DB is empty')
