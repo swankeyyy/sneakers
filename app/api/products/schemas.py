@@ -36,3 +36,12 @@ class SingleProduct(ProductBase):
     created_at: datetime
     product_size: SizeBase
     product_brand: BrandBase
+
+
+class ListProduct(ProductBase):
+    """Schema for list of products with status active"""
+    name: str
+    slug: str
+    image: Optional[str] = None
+    price: int
+    product_brand: BrandBase
