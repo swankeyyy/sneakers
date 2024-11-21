@@ -17,6 +17,7 @@ router = APIRouter()
 @router.get('/all/', summary="Get all products from DB", response_model=Union[list[ListProduct], None])
 async def get_all_products(response: Response,
                            session: AsyncSession = Depends(db_config.get_session)) -> list[Product] | Exception:
+    """Return all products from DB with Flag Active or raise exception if DB is empty"""
     products = await ProductService.get_all_products(session=session, response=response)
     return products
 
