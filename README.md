@@ -31,7 +31,7 @@ e-commerce backend prjct
     }
 
 #### Get all active products (with flag is_active=True):
-    products/{product_uuid}
+    products/all/
 
 #### returns list of JSON like:
     [
