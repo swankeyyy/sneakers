@@ -47,6 +47,6 @@ class ListProduct(ProductBase):
     product_brand: BrandBase
 
 
-class ListBrands(BrandBase):
-    """Schema for list of brands with active products"""
+class Brand(BrandBase):
+    """Schema for brands with active products"""
     products: list[ListProduct]
