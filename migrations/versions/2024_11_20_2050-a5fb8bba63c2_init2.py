@@ -1,8 +1,8 @@
-"""add Product Size and Brand Models
+"""init2
 
-Revision ID: e572f5b99a78
+Revision ID: a5fb8bba63c2
 Revises: 
-Create Date: 2024-11-16 09:20:51.127757
+Create Date: 2024-11-20 20:50:30.397104
 
 """
 from typing import Sequence, Union
@@ -10,9 +10,20 @@ from typing import Sequence, Union
 from alembic import op
 import sqlalchemy as sa
 
+import fastapi_storages
+from app.src.models.product import storage
+
+
+
+from typing import Any
+
+
+
+
+
 
 # revision identifiers, used by Alembic.
-revision: str = 'e572f5b99a78'
+revision: str = 'a5fb8bba63c2'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -36,12 +47,13 @@ def upgrade() -> None:
     sa.Column('name', sa.String(length=50), nullable=False),
     sa.Column('description', sa.String(length=200), nullable=True),
     sa.Column('slug', sa.String(length=50), nullable=False),
-    sa.Column('image', sa.String(length=50), nullable=True),
+    sa.Column('image', fastapi_storages.integrations.sqlalchemy.FileType(storage), nullable=True),
     sa.Column('quantity', sa.Integer(), nullable=False),
     sa.Column('price', sa.Float(), nullable=False),
     sa.Column('gender', sa.Enum('male', 'female', name='gendertype'), nullable=False),
     sa.Column('product_size_id', sa.UUID(), nullable=True),
     sa.Column('product_brand_id', sa.UUID(), nullable=True),
+    sa.Column('created_at', sa.DateTime(timezone=True), nullable=False),
     sa.Column('id', sa.UUID(), nullable=False),
     sa.ForeignKeyConstraint(['product_brand_id'], ['brands.id'], name=op.f('fk_products_product_brand_id_brands')),
     sa.ForeignKeyConstraint(['product_size_id'], ['sizes.id'], name=op.f('fk_products_product_size_id_sizes')),

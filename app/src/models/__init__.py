@@ -1,5 +1,5 @@
-__all__ = ("Base", "Product", "db_config")
+__all__ = ("Base", "Product", "db_config", "Brand", "Size")
 
 from .base import Base
-from .product import Product
+from .product import Product, Brand, Size
 from .db_config import db_config
