@@ -1,9 +1,10 @@
 from datetime import datetime
-from typing import List
+from typing import List, TYPE_CHECKING
 from uuid import UUID
 
 from app.src.settings import settings
 from .base import IdPkMixin, Base
+
 
 from sqlalchemy import String, Integer, Enum, ForeignKey, Float, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, validates, relationship
@@ -12,6 +13,9 @@ from fastapi_storages.integrations.sqlalchemy import FileType
 from fastapi_storages import FileSystemStorage
 
 from enum import Enum as en_Enum
+
+if TYPE_CHECKING:
+    from .order import Order
 
 # storage for images of Product
 storage = FileSystemStorage(path=settings.STORAGE_URL)
@@ -39,6 +43,9 @@ class Product(IdPkMixin, Base):
     product_brand: Mapped["Brand"] = relationship(back_populates="products")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=datetime.now)
     is_active: Mapped[bool] = mapped_column(default=True, nullable=True)
+    orders: Mapped[list["Order"]] = relationship(secondary="order_product_association",
+                                                 back_populates="products",
+                                                 )
 
     def __repr__(self):
         return f'{self.name}'
