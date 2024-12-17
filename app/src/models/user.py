@@ -11,5 +11,9 @@ if TYPE_CHECKING:
 
 
 class User(SQLAlchemyBaseUserTableUUID, Base):
+    """Default User model of FastapiUsers extended with order"""
     orders: Mapped[List["Order"]] = relationship(back_populates="order_user",
-                                                 cascade="all, delete-orphan", lazy="select")
+                                                 cascade="all, delete-orphan", lazy="selectin")
+
+    def __repr__(self) -> str:
+        return f"<User {self.email}>"

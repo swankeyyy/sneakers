@@ -7,12 +7,14 @@ from sqlalchemy import func, ForeignKey
 from datetime import datetime
 
 from .base import Base, IdPkMixin
+
 if TYPE_CHECKING:
     from .user import User
     from .product import Product
 
 
 class Order(IdPkMixin, Base):
+    """Model of order with FK on User and m2m for products"""
     __tablename__ = 'orders'
     created_at: Mapped[datetime] = mapped_column(
         server_default=func.now(),
@@ -25,5 +27,8 @@ class Order(IdPkMixin, Base):
     products: Mapped[list["Product"]] = relationship(
         secondary="order_product_association",
         back_populates="orders",
+        lazy="selectin"
     )
 
+    def __repr__(self):
+        return f"<Order {self.id}>"

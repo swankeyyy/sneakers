@@ -1,6 +1,6 @@
 from sqladmin import ModelView
 
-from src.models import Brand, Size, Product, User
+from src.models import Brand, Size, Product, User, Order
 
 
 class BrandAdmin(ModelView, model=Brand):
@@ -38,3 +38,10 @@ class UserAdmin(ModelView, model=User):
     name_plural = 'Пользователи'
 
     column_list = [User.email, User.id]
+
+
+class OrderAdmin(ModelView, model=Order):
+    "Admin panel model for Order"
+    name = 'Заказ'
+    name_plural = 'Заказы'
+    column_list = [Order.order_user, Order.id]
