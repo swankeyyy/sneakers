@@ -7,7 +7,7 @@ from fastapi import HTTPException
 from starlette import status
 from starlette.responses import Response
 
-from src.models import Product, Brand, Size
+from src.models import Product, Brand
 
 
 class ProductService:
